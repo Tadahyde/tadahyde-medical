@@ -1,309 +1,107 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Tadahyde Medical — approachable health education, heart health, anatomy and study resources.">
-  <title>Tadahyde Medical | Learn. Understand. Live Well.</title>
-  <style>
-    :root {
-      --navy: #102a43;
-      --blue: #176b87;
-      --teal: #24a89a;
-      --mint: #e8f7f4;
-      --paper: #f7fbfc;
-      --ink: #243b53;
-      --muted: #627d98;
-      --white: #ffffff;
-      --line: #d9e6ec;
-      --shadow: 0 16px 42px rgba(16, 42, 67, .09);
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--ink); background: var(--paper); line-height: 1.6;
-    }
-    a { color: inherit; text-decoration: none; }
-    button, input { font: inherit; }
-    .container { width: min(1120px, calc(100% - 40px)); margin: auto; }
-    .topbar { background: var(--navy); color: #d8f3f0; font-size: .86rem; padding: 9px 0; }
-    .topbar .container { display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
-    header { background: rgba(255,255,255,.96); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 10; backdrop-filter: blur(12px); }
-    .nav { display: flex; align-items: center; justify-content: space-between; min-height: 78px; gap: 20px; }
-    .brand { display: flex; align-items: center; gap: 11px; font-weight: 850; color: var(--navy); letter-spacing: -.04em; font-size: 1.18rem; }
-    .brand-icon { width: 43px; height: 43px; display: grid; place-items: center; color: white; background: linear-gradient(145deg, var(--blue), var(--teal)); border-radius: 14px; font-size: 1.35rem; box-shadow: 0 8px 18px #176b8733; }
-    .brand small { display: block; font-weight: 600; letter-spacing: .02em; color: var(--muted); font-size: .67rem; margin-top: -3px; }
-    .nav-links { display: flex; align-items: center; gap: 24px; font-size: .92rem; font-weight: 650; color: #486581; }
-    .nav-links a:hover { color: var(--teal); }
-    .nav-cta, .btn { border: 0; border-radius: 12px; padding: 12px 18px; background: var(--teal); color: white; font-weight: 750; cursor: pointer; display: inline-flex; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 8px 18px #24a89a2e; transition: transform .18s, background .18s; }
-    .nav-cta:hover, .btn:hover { background: #168f84; transform: translateY(-2px); }
-    .menu-btn { display: none; border: 1px solid var(--line); border-radius: 10px; background: white; padding: 8px 12px; color: var(--navy); }
-    .hero { padding: 76px 0 64px; overflow: hidden; background: radial-gradient(circle at 88% 22%, #c9f3eb 0, transparent 25%), linear-gradient(135deg, #f5fbfd 0%, #eaf8f7 100%); }
-    .hero-grid { display: grid; grid-template-columns: 1.12fr .88fr; align-items: center; gap: 54px; }
-    .eyebrow { display: inline-flex; align-items: center; gap: 8px; border: 1px solid #c4e9e4; background: #ffffffb8; color: #147c73; border-radius: 999px; padding: 7px 12px; font-size: .8rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
-    h1 { font-size: clamp(2.65rem, 5.5vw, 4.7rem); line-height: 1.04; letter-spacing: -.06em; color: var(--navy); margin: 22px 0; }
-    h1 span { color: var(--teal); }
-    .hero p { color: #486581; font-size: 1.12rem; max-width: 570px; }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
-    .btn.secondary { background: white; color: var(--navy); border: 1px solid var(--line); box-shadow: none; }
-    .hero-note { display: flex; gap: 10px; align-items: center; margin-top: 25px; color: var(--muted); font-size: .88rem; }
-    .hero-art { min-height: 380px; display: grid; place-items: center; position: relative; }
-    .orb { width: min(340px, 82vw); aspect-ratio: 1; border-radius: 50%; background: linear-gradient(145deg, #d3f6f0, #a4e2dc); display: grid; place-items: center; position: relative; box-shadow: inset -16px -20px 35px #1b8c8c18, 0 25px 65px #176b871f; }
-    .heart { font-size: clamp(7rem, 18vw, 11rem); filter: drop-shadow(0 16px 14px #176b8728); }
-    .floating-card { position: absolute; background: white; border: 1px solid #e1eef1; border-radius: 17px; padding: 14px 17px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 12px; }
-    .floating-card strong { display: block; color: var(--navy); font-size: .92rem; }
-    .floating-card small { color: var(--muted); font-size: .76rem; }
-    .float-one { top: 28px; right: -4px; }
-    .float-two { bottom: 34px; left: -8px; }
-    .float-icon { width: 38px; height: 38px; display: grid; place-items: center; background: var(--mint); border-radius: 12px; font-size: 1.25rem; }
-    section { padding: 76px 0; }
-    .section-head { text-align: center; max-width: 690px; margin: 0 auto 36px; }
-    .section-kicker { color: var(--teal); font-weight: 850; font-size: .8rem; letter-spacing: .13em; text-transform: uppercase; }
-    h2 { color: var(--navy); font-size: clamp(2rem, 4vw, 2.85rem); line-height: 1.13; letter-spacing: -.045em; margin: 10px 0 13px; }
-    .section-head p { color: var(--muted); margin: 0; }
-    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .card { background: white; border: 1px solid var(--line); border-radius: 20px; padding: 25px; box-shadow: 0 8px 24px #102a4308; transition: transform .2s, box-shadow .2s; }
-    .card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
-    .card-icon { width: 53px; height: 53px; display: grid; place-items: center; border-radius: 16px; background: var(--mint); font-size: 1.7rem; margin-bottom: 20px; }
-    .card h3 { margin: 0 0 9px; color: var(--navy); font-size: 1.2rem; }
-    .card p { color: var(--muted); font-size: .94rem; margin: 0 0 18px; }
-    .text-link { color: #168f84; font-weight: 800; font-size: .91rem; }
-    .resources { background: white; }
-    .resource-tools { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
-    .search { flex: 1; min-width: 230px; max-width: 440px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); background: var(--paper); padding: 11px 14px; border-radius: 12px; }
-    .search input { border: 0; outline: 0; background: transparent; width: 100%; color: var(--ink); }
-    .tag { background: var(--mint); color: #147c73; padding: 7px 11px; border-radius: 999px; font-weight: 750; font-size: .78rem; }
-    .resource-card { padding: 0; overflow: hidden; }
-    .resource-banner { min-height: 115px; display: grid; place-items: center; background: linear-gradient(135deg, #e1f8f4, #dceefa); font-size: 3.2rem; }
-    .resource-body { padding: 21px; }
-    .resource-body .tag { display: inline-block; margin-bottom: 10px; }
-    .resource-body h3 { margin: 0 0 8px; }
-    .resource-body p { margin-bottom: 13px; }
-    .empty { display: none; text-align: center; padding: 25px; color: var(--muted); }
-    .mission { background: linear-gradient(135deg, var(--navy), #174b65); color: white; }
-    .mission-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 55px; align-items: center; }
-    .mission h2 { color: white; }
-    .mission p { color: #d5e7f0; }
-    .mission-box { background: #ffffff0d; border: 1px solid #ffffff25; border-radius: 22px; padding: 26px; }
-    .mission-point { display: flex; gap: 14px; padding: 13px 0; border-bottom: 1px solid #ffffff1a; }
-    .mission-point:last-child { border: 0; }
-    .check { width: 29px; height: 29px; border-radius: 50%; background: #24a89a; color: white; display: grid; place-items: center; flex-shrink: 0; font-weight: 900; }
-    .mission-point strong { display: block; }
-    .mission-point span { color: #c7dce7; font-size: .9rem; }
-    .disclaimer { border-left: 4px solid #e6b85c; background: #fff9e9; border-radius: 0 12px 12px 0; padding: 16px 18px; color: #725a2a; font-size: .9rem; margin-top: 28px; }
-    .contact-box { background: white; border: 1px solid var(--line); border-radius: 24px; padding: 32px; display: flex; justify-content: space-between; align-items: center; gap: 24px; box-shadow: var(--shadow); }
-    .contact-box h2 { margin-top: 0; }
-    .contact-box p { color: var(--muted); margin-bottom: 0; }
-    footer { background: #0b2034; color: #d5e7f0; padding: 28px 0; font-size: .88rem; }
-    .footer-row { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
-    footer strong { color: white; }
-    .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
-    @media (max-width: 850px) {
-      .hero-grid, .mission-grid { grid-template-columns: 1fr; gap: 28px; }
-      .hero { padding-top: 55px; }
-      .hero-art { min-height: 330px; }
-      .cards { grid-template-columns: repeat(2, 1fr); }
-      .nav-links { gap: 13px; }
-    }
-    @media (max-width: 620px) {
-      .container { width: min(100% - 30px, 1120px); }
-      .menu-btn { display: block; }
-      .nav { min-height: 70px; }
-      .nav-links { display: none; position: absolute; top: 70px; left: 0; right: 0; background: white; border-bottom: 1px solid var(--line); padding: 18px 22px 22px; flex-direction: column; align-items: stretch; }
-      .nav-links.open { display: flex; }
-      .nav-links a { padding: 7px 0; }
-      .nav-cta { text-align: center; }
-      .hero { padding: 44px 0; }
-      .hero-art { min-height: 290px; }
-      .orb { width: 255px; }
-      .float-one { right: -3px; top: 8px; }
-      .float-two { left: -2px; bottom: 9px; }
-      .floating-card { padding: 10px 12px; }
-      .floating-card small { font-size: .69rem; }
-      section { padding: 58px 0; }
-      .cards { grid-template-columns: 1fr; }
-      .contact-box { padding: 23px; align-items: flex-start; flex-direction: column; }
-      .topbar .container { justify-content: center; text-align: center; }
-    }
-  </style>
-</head>
-<body>
-  <div class="topbar">
-    <div class="container"><span>Knowledge for healthier lives</span><span>Medical education • Heart health • Student resources</span></div>
-  </div>
-  <header>
-    <div class="container nav">
-      <a class="brand" href="#home" aria-label="Tadahyde Medical home">
-        <span class="brand-icon">✚</span><span>Tadahyde Medical<small>Learn. Understand. Live well.</small></span>
-      </a>
-      <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">☰ Menu</button>
-      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
-        <a href="#explore">Explore</a><a href="#resources">Study resources</a><a href="#mission">Our mission</a><a href="#contact">Contact</a>
-        <a class="nav-cta" href="#resources">Start learning ↗</a>
-      </nav>
-    </div>
-  </header>
+Tadahyde Medical | Learn. Understand. Heal. :root { --navy: #073b4c; --blue: #087fbd; --cyan: #20c4c9; --light: #f1f8fc; --white: #ffffff; --text: #243746; --muted: #637786; --red: #e94f64; } * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; } body { font-family: Arial, Helvetica, sans-serif; background: var(--light); color: var(--text); line-height: 1.7; } header { background: var(--white); padding: 15px 6%; display: flex; justify-content: space-between; align-items: center; gap: 15px; box-shadow: 0 3px 15px #073b4c12; position: sticky; top: 0; z-index: 100; } .logo { font-size: 21px; font-weight: bold; color: var(--navy); white-space: nowrap; } .logo span { color: var(--red); } nav { display: flex; gap: 15px; flex-wrap: wrap; } nav a { text-decoration: none; color: var(--navy); font-size: 13px; font-weight: bold; } nav a:hover { color: var(--blue); } .hero { background: linear-gradient(135deg, #073b4c, #087fbd); color: white; padding: 75px 7%; display: grid; grid-template-columns: 1.4fr 1fr; align-items: center; gap: 30px; } .hero-label { color: #9ff9f0; font-size: 13px; font-weight: bold; letter-spacing: 2px; } .hero h1 { font-size: clamp(35px, 5vw, 55px); line-height: 1.15; margin: 18px 0; } .hero h1 span { color: #68f0e5; } .hero p { color: #e0f1f7; max-width: 550px; margin-bottom: 25px; } .button { display: inline-block; background: var(--cyan); color: #073b4c; padding: 12px 22px; border-radius: 8px; text-decoration: none; font-weight: bold; border: none; cursor: pointer; font-size: 14px; } .button:hover { opacity: 0.85; } .hero-art { font-size: 120px; text-align: center; padding: 25px; background: #ffffff12; border: 1px solid #ffffff30; border-radius: 25px; } .notice { padding: 15px 6%; background: #e3f6f5; color: #075b60; font-size: 13px; text-align: center; } section { padding: 55px 6%; } .section-heading { text-align: center; margin-bottom: 30px; } .section-heading h2 { color: var(--navy); font-size: 30px; } .section-heading p { color: var(--muted); margin-top: 8px; } .search-box { max-width: 650px; margin: 25px auto 0; display: flex; gap: 10px; } input, select { width: 100%; padding: 13px; border: 1px solid #d4e2ea; border-radius: 8px; font-size: 15px; background: white; } .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; } .card { background: white; padding: 25px; border-radius: 14px; box-shadow: 0 5px 20px #073b4c0b; border: 1px solid #e5eef3; transition: transform 0.2s; } .card:hover { transform: translateY(-4px); } .card-icon { font-size: 38px; margin-bottom: 12px; } .card h3 { color: var(--navy); margin-bottom: 10px; } .card p { color: var(--muted); font-size: 14px; margin-bottom: 15px; } .text-button { border: none; background: none; color: var(--blue); font-weight: bold; cursor: pointer; font-size: 14px; } .featured { background: white; } .article { display: none; background: white; border: 1px solid #dce8ef; border-radius: 14px; padding: 25px; margin-top: 25px; } .article h3 { color: var(--navy); margin: 15px 0 8px; } .article p, .article li { margin-bottom: 10px; } .article ul { padding-left: 22px; } .quiz-box { background: white; max-width: 700px; margin: auto; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px #073b4c0b; } .quiz-option { display: block; width: 100%; text-align: left; padding: 13px; margin: 10px 0; border: 1px solid #d4e2ea; background: #f8fbfd; border-radius: 8px; cursor: pointer; } .quiz-option:hover { border-color: var(--blue); } #quiz-feedback { margin: 15px 0; font-weight: bold; } .student-banner { background: linear-gradient(120deg, #073b4c, #087fbd); color: white; border-radius: 18px; padding: 35px; text-align: center; } .student-banner h2 { font-size: 28px; margin-bottom: 10px; } footer { background: #052d3a; color: #d9e8ee; padding: 35px 6%; text-align: center; font-size: 13px; } footer p { margin: 8px 0; } .hidden { display: none !important; } @media (max-width: 800px) { header { flex-direction: column; } nav { justify-content: center; gap: 12px; } .hero { grid-template-columns: 1fr; padding: 50px 6%; text-align: center; } .hero p { margin-left: auto; margin-right: auto; } .hero-art { font-size: 85px; } .grid { grid-template-columns: repeat(2, 1fr); } } @media (max-width: 520px) { .grid { grid-template-columns: 1fr; } section { padding: 40px 5%; } .section-heading h2 { font-size: 25px; } .search-box { flex-direction: column; } .student-banner { padding: 25px 18px; } } 
 
-  <main>
-    <section class="hero" id="home">
-      <div class="container hero-grid">
-        <div>
-          <span class="eyebrow">✦ Health knowledge for everyone</span>
-          <h1>Understand your body. <span>Protect your health.</span></h1>
-          <p>Welcome to Tadahyde Medical — a growing learning space for clear health education, heart health awareness, human anatomy, and medical student resources.</p>
-          <div class="hero-actions">
-            <a class="btn" href="#explore">Explore topics <span>→</span></a>
-            <a class="btn secondary" href="#mission">Our mission</a>
-          </div>
-          <div class="hero-note"><span>✓</span><span>Made for curious minds, learners, and future healthcare professionals.</span></div>
-        </div>
-        <div class="hero-art" aria-label="Illustration representing heart health">
-          <div class="orb"><div class="heart" aria-hidden="true">🫀</div></div>
-          <div class="floating-card float-one"><span class="float-icon">💓</span><span><strong>Heart health</strong><small>Know your numbers</small></span></div>
-          <div class="floating-card float-two"><span class="float-icon">📖</span><span><strong>Keep learning</strong><small>One topic at a time</small></span></div>
-        </div>
-      </div>
-    </section>
+TADAHYDE+ MEDICAL
 
-    <section id="explore">
-      <div class="container">
-        <div class="section-head">
-          <span class="section-kicker">Explore Tadahyde Medical</span>
-          <h2>Knowledge that supports healthier choices</h2>
-          <p>Start with a topic that interests you. Content on this site is educational and will grow over time.</p>
-        </div>
-        <div class="cards">
-          <article class="card">
-            <div class="card-icon">🫀</div><h3>Heart Health</h3>
-            <p>Learn about the heart, blood pressure, circulation, and everyday habits that support cardiovascular health.</p>
-            <a class="text-link" href="#resources">Explore heart topics →</a>
-          </article>
-          <article class="card">
-            <div class="card-icon">🧠</div><h3>Human Anatomy</h3>
-            <p>Explore the body's major organs and systems, from bones and muscles to the brain and nervous system.</p>
-            <a class="text-link" href="#resources">Explore anatomy →</a>
-          </article>
-          <article class="card">
-            <div class="card-icon">📚</div><h3>Student Learning</h3>
-            <p>Build your foundation with study guides, revision prompts, definitions, and self-test questions.</p>
-            <a class="text-link" href="#resources">View learning resources →</a>
-          </article>
-          <article class="card">
-            <div class="card-icon">🌿</div><h3>Healthy Living</h3>
-            <p>Read general educational information about sleep, nutrition, physical activity, and preventive care.</p>
-            <a class="text-link" href="#resources">Explore healthy living →</a>
-          </article>
-          <article class="card">
-            <div class="card-icon">🔬</div><h3>Diseases & Prevention</h3>
-            <p>Understand common health conditions, risk factors, prevention, and when professional assessment matters.</p>
-            <a class="text-link" href="#resources">Explore health topics →</a>
-          </article>
-          <article class="card">
-            <div class="card-icon">🩺</div><h3>Medical Foundations</h3>
-            <p>Get introduced to medical vocabulary and foundational concepts in physiology and health science.</p>
-            <a class="text-link" href="#resources">Start studying →</a>
-          </article>
-        </div>
-      </div>
-    </section>
+Home Explore Library Quizzes Students 
 
-    <section class="resources" id="resources">
-      <div class="container">
-        <div class="section-head">
-          <span class="section-kicker">Learning library</span>
-          <h2>Take your next step</h2>
-          <p>Use the search box to filter these starter topics. You can replace these sample cards with reviewed articles as your website grows.</p>
-        </div>
-        <div class="resource-tools">
-          <label class="search"><span>⌕</span><input id="resourceSearch" type="search" placeholder="Search topics, e.g. heart or anatomy" aria-label="Search learning topics"></label>
-          <span class="tag">Starter learning library</span>
-        </div>
-        <div class="cards" id="resourceCards">
-          <article class="card resource-card" data-search="heart cardiovascular circulation anatomy">
-            <div class="resource-banner">🫀</div><div class="resource-body"><span class="tag">Heart health</span><h3>How the heart works</h3><p>An introduction to the heart's chambers, valves, and role in circulating blood.</p><a class="text-link" href="#disclaimer">Read responsibly →</a></div>
-          </article>
-          <article class="card resource-card" data-search="blood pressure heart healthy living prevention">
-            <div class="resource-banner">💓</div><div class="resource-body"><span class="tag">Prevention</span><h3>Understanding blood pressure</h3><p>Learn what the two blood pressure numbers generally represent and why checks matter.</p><a class="text-link" href="#disclaimer">Read responsibly →</a></div>
-          </article>
-          <article class="card resource-card" data-search="anatomy bones skeletal human body students">
-            <div class="resource-banner">🦴</div><div class="resource-body"><span class="tag">Anatomy</span><h3>Introduction to the skeleton</h3><p>Discover how bones support the body, protect organs, and help with movement.</p><a class="text-link" href="#disclaimer">Read responsibly →</a></div>
-          </article>
-          <article class="card resource-card" data-search="physiology lungs breathing respiratory medical students">
-            <div class="resource-banner">🌬️</div><div class="resource-body"><span class="tag">Physiology</span><h3>How breathing works</h3><p>A beginner-friendly overview of the respiratory system and gas exchange.</p><a class="text-link" href="#disclaimer">Read responsibly →</a></div>
-          </article>
-          <article class="card resource-card" data-search="nutrition sleep exercise healthy living">
-            <div class="resource-banner">🌿</div><div class="resource-body"><span class="tag">Healthy living</span><h3>Everyday habits for wellbeing</h3><p>Explore general habits that can support wellbeing, including sleep and movement.</p><a class="text-link" href="#disclaimer">Read responsibly →</a></div>
-          </article>
-          <article class="card resource-card" data-search="medical student study revision quiz learning">
-            <div class="resource-banner">📚</div><div class="resource-body"><span class="tag">Student resources</span><h3>Build a study routine</h3><p>Try active recall, short review sessions, and practice questions to support learning.</p><a class="text-link" href="#disclaimer">Read responsibly →</a></div>
-          </article>
-        </div>
-        <div class="empty" id="emptyState">No topics found. Try a different search term.</div>
-        <div class="disclaimer" id="disclaimer"><strong>Important health notice:</strong> This website is for general education only. It does not diagnose conditions, prescribe treatment, or replace advice from a qualified healthcare professional. For urgent or severe symptoms, seek emergency medical care.</div>
-      </div>
-    </section>
+YOUR MEDICAL LEARNING HUB
 
-    <section class="mission" id="mission">
-      <div class="container mission-grid">
-        <div>
-          <span class="section-kicker">Why we exist</span>
-          <h2>Make medical knowledge easier to understand.</h2>
-          <p>Tadahyde Medical aims to make health education clearer and more approachable for the public and for learners beginning their journey in medicine.</p>
-          <p>Our principle is simple: learn carefully, communicate clearly, and treat health information responsibly.</p>
-        </div>
-        <div class="mission-box">
-          <div class="mission-point"><span class="check">✓</span><div><strong>Clear explanations</strong><span>Use plain language to explain complex ideas.</span></div></div>
-          <div class="mission-point"><span class="check">✓</span><div><strong>Responsible information</strong><span>Review medical content and use trustworthy sources before publishing.</span></div></div>
-          <div class="mission-point"><span class="check">✓</span><div><strong>Continuous learning</strong><span>Keep improving the resource library as the site develops.</span></div></div>
-        </div>
-      </div>
-    </section>
+Understand the body.
+Discover medicine. 
 
-    <section id="contact">
-      <div class="container">
-        <div class="contact-box">
-          <div><span class="section-kicker">Get in touch</span><h2>Have a topic in mind?</h2><p>Suggest a topic or ask about educational resources. Add your real contact details before publishing.</p></div>
-          <a class="btn" href="mailto:hello@example.com?subject=Tadahyde%20Medical%20enquiry">Email us ↗</a>
-        </div>
-        <p style="font-size:.82rem;color:#829ab1;margin:14px 2px 0">Setup note: replace hello@example.com with an email address you control before publishing.</p>
-      </div>
-    </section>
-  </main>
-  <footer>
-    <div class="container footer-row">
-      <div><strong>✚ Tadahyde Medical</strong><br><span>Learn. Understand. Live well.</span></div>
-      <div class="footer-links"><a href="#explore">Explore</a><a href="#resources">Resources</a><a href="#mission">Our mission</a><a href="#disclaimer">Health notice</a></div>
-      <div>© <span id="year"></span> Tadahyde Medical</div>
-    </div>
-  </footer>
-  <script>
-    const menuBtn = document.getElementById('menuBtn');
-    const navLinks = document.getElementById('navLinks');
-    menuBtn.addEventListener('click', () => {
-      const open = navLinks.classList.toggle('open');
-      menuBtn.setAttribute('aria-expanded', String(open));
-      menuBtn.textContent = open ? '✕ Close' : '☰ Menu';
-    });
-    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-      navLinks.classList.remove('open');
-      menuBtn.setAttribute('aria-expanded', 'false');
-      menuBtn.textContent = '☰ Menu';
-    }));
-    const search = document.getElementById('resourceSearch');
-    const resourceCards = [...document.querySelectorAll('.resource-card')];
-    const emptyState = document.getElementById('emptyState');
-    search.addEventListener('input', () => {
-      const query = search.value.trim().toLowerCase();
-      let visible = 0;
-      resourceCards.forEach(card => {
-        const match = (card.dataset.search + ' ' + card.innerText).toLowerCase().includes(query);
-        card.style.display = match ? '' : 'none';
-        if (match) visible++;
-      });
-      emptyState.style.display = visible ? 'none' : 'block';
-    });
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
-</body>
-</html>
+Explore the human body, learn about heart health, understand diseases and build your medical knowledge one lesson at a time. 
+
+Start Learning → 
+
+🩺🫀
+
+Educational resource only. Information on this website does not replace professional medical advice, diagnosis or treatment. 
+
+Explore Medical Science 
+
+Start with a subject that interests you.
+
+<div class="search-box"> <input id="search" type="search" placeholder="Search anatomy, heart health, blood..." aria-label="Search medical topics"> <button class="button" onclick="searchTopics()">Search</button> </div> </div> <div class="grid" id="topic-grid"> <div class="card searchable"> <div class="card-icon">🫀</div> <h3>Heart Health</h3> <p>Explore the heart, circulation, blood pressure and cardiovascular health.</p> <button class="text-button" onclick="openArticle('heart')">Explore topic →</button> </div> <div class="card searchable"> <div class="card-icon">🦴</div> <h3>Human Anatomy</h3> <p>Discover the organs, bones, muscles and structures of the human body.</p> <button class="text-button" onclick="openArticle('anatomy')">Explore topic →</button> </div> <div class="card searchable"> <div class="card-icon">🩸</div> <h3>Blood & Circulation</h3> <p>Learn about red blood cells, white blood cells, platelets and plasma.</p> <button class="text-button" onclick="openArticle('blood')">Explore topic →</button> </div> <div class="card searchable"> <div class="card-icon">🧠</div> <h3>Human Physiology</h3> <p>Understand how body systems function and work together.</p> <button class="text-button" onclick="openArticle('physiology')">Explore topic →</button> </div> <div class="card searchable"> <div class="card-icon">🔬</div> <h3>Diseases & Prevention</h3> <p>Study common diseases, risk factors and evidence-based prevention.</p> <button class="text-button" onclick="openArticle('diseases')">Explore topic →</button> </div> <div class="card searchable"> <div class="card-icon">📚</div> <h3>Medical Student Zone</h3> <p>Build your knowledge through revision, quizzes and study resources.</p> <a class="text-button" href="#students">Visit student zone →</a> </div> </div> <p id="no-results" class="hidden" style="text-align:center;margin-top:20px;"> No matching topics found. Try another search. </p> <div id="article-display" class="article" aria-live="polite"> <button class="text-button" onclick="closeArticle()">← Back to topics</button> <div id="article-content"></div> </div> 
+
+Medical Knowledge Library 
+
+Build a foundation in essential medical subjects.
+
+<div class="grid"> <div class="card"> <div class="card-icon">📖</div> <h3>Anatomy</h3> <p>Study body structures, anatomical terminology and organ systems.</p> <button class="text-button" onclick="openArticle('anatomy')">Read introduction →</button> </div> <div class="card"> <div class="card-icon">⚙️</div> <h3>Physiology</h3> <p>Learn how the body maintains balance and performs essential functions.</p> <button class="text-button" onclick="openArticle('physiology')">Read introduction →</button> </div> <div class="card"> <div class="card-icon">🧫</div> <h3>Pathology</h3> <p>Explore how diseases affect tissues, organs and normal body function.</p> <button class="text-button" onclick="openArticle('diseases')">Read introduction →</button> </div> </div> 
+
+Test Your Medical Knowledge 
+
+Answer a question and see how you perform.
+
+<div class="quiz-box"> <p id="question-number">Question 1 of 5</p> <h3 id="question" style="margin:15px 0;">Which organ pumps blood around the body?</h3> <div id="options"></div> <p id="quiz-feedback" aria-live="polite"></p> <button class="button" id="next-question" onclick="nextQuestion()" disabled> Next Question → </button> <p id="quiz-score" style="margin-top:15px;"></p> </div> 
+
+For Future Medical Professionals 
+
+Whether you are beginning your medical journey or preparing for examinations, curiosity and consistent learning matter. 
+
+Study anatomy • Review physiology • Practise questions 
+
+Take a quiz 
+
+TADAHYDE+ MEDICAL
+
+Learn. Understand. Heal.
+
+Making medical knowledge easier to explore.
+
+Disclaimer: This website provides general educational information. It is not a substitute for individual medical care. 
+
+© Tadahyde Medical. All rights reserved.
+
+const articles = { heart: { title: "Heart Health", content: ` 
+
+The heart is a muscular organ that pumps blood through the circulatory system.
+
+The four chambers Right atrium: receives oxygen-poor blood returning from the body. Right ventricle: pumps blood to the lungs. Left atrium: receives oxygen-rich blood from the lungs. Left ventricle: pumps blood into the aorta to supply the body. How to support heart health 
+
+Regular physical activity, avoiding tobacco, eating a balanced diet and monitoring blood pressure can help reduce cardiovascular risk.
+
+Important: Chest pain, severe difficulty breathing or fainting can be emergencies. Seek urgent medical care rather than relying on online information.
+
+` }, anatomy: { title: "Introduction to Human Anatomy", content: ` 
+
+Anatomy is the study of the structures of the human body and how they are arranged.
+
+Major body systems Skeletal system: supports the body and protects organs. Muscular system: enables movement and helps maintain posture. Nervous system: processes information and coordinates responses. Cardiovascular system: transports blood, oxygen and nutrients. Respiratory system: enables oxygen and carbon dioxide exchange. Digestive system: processes food and absorbs nutrients. Study tip 
+
+Learn the anatomical position first, then study the location, structure and function of each organ.
+
+` }, blood: { title: "Blood and Circulation", content: ` 
+
+Blood transports oxygen, nutrients, hormones and waste products around the body.
+
+Main components of blood Red blood cells: carry oxygen using haemoglobin. White blood cells: help defend the body against infections. Platelets: help form clots to reduce bleeding. Plasma: the liquid component that carries cells and dissolved substances. 
+
+Blood circulates through arteries, veins and capillaries. The heart provides the force that drives circulation.
+
+` }, physiology: { title: "Introduction to Human Physiology", content: ` 
+
+Physiology studies how the body and its organs function.
+
+Homeostasis 
+
+Homeostasis is the regulation of internal conditions within a range that supports normal body function.
+
+Examples include regulating body temperature, blood glucose and fluid balance.
+
+Negative feedback 
+
+Negative feedback helps counteract a change and return a condition towards its normal range. Sweating when body temperature rises is one example.
+
+Physiology connects the structure of organs with what they do.
+
+` }, diseases: { title: "Diseases and Prevention", content: ` 
+
+Disease can affect the structure or function of the body. Causes include infections, genetic factors, environmental exposures and disruptions in normal body processes.
+
+Prevention and health Keep recommended vaccinations up to date. Practise appropriate hand hygiene and food safety. Attend recommended health screenings. Use prescribed medicines as directed by a qualified professional. Seek qualified medical care for concerning symptoms. 
+
+Symptoms alone cannot reliably establish a diagnosis. A healthcare professional may need a history, examination and tests.
+
+` } }; function openArticle(key) { const article = articles[key]; if (!article) return; document.getElementById("article-content").innerHTML = "" + article.title + "" + article.content; document.getElementById("article-display").style.display = "block"; document.getElementById("article-display").scrollIntoView({ behavior: "smooth", block: "start" }); } function closeArticle() { document.getElementById("article-display").style.display = "none"; } function searchTopics() { const query = document.getElementById("search").value.toLowerCase().trim(); const cards = document.querySelectorAll(".searchable"); let visible = 0; cards.forEach(card => { const matches = card.textContent.toLowerCase().includes(query); card.classList.toggle("hidden", !matches); if (matches) visible++; }); document.getElementById("no-results").classList.toggle("hidden", visible > 0); } document.getElementById("search").addEventListener("keydown", function(event) { if (event.key === "Enter") searchTopics(); }); const questions = [ { question: "Which organ pumps blood around the body?", options: ["Liver", "Heart", "Kidney", "Lung"], answer: 1, explanation: "The heart pumps blood through the circulatory system." }, { question: "Which blood cells primarily carry oxygen?", options: ["Platelets", "White blood cells", "Red blood cells", "Stem cells"], answer: 2, explanation: "Red blood cells contain haemoglobin, which carries oxygen." }, { question: "How many chambers does the human heart have?", options: ["Two", "Three", "Four", "Five"], answer: 2, explanation: "The heart has two atria and two ventricles." }, { question: "Which organ is primarily responsible for gas exchange?", options: ["Stomach", "Lungs", "Pancreas", "Spleen"], answer: 1, explanation: "Gas exchange occurs mainly in the alveoli of the lungs." }, { question: "What is the study of body structure called?", options: ["Physiology", "Anatomy", "Pathology", "Ecology"], answer: 1, explanation: "Anatomy studies body structures; physiology studies their functions." } ]; let currentQuestion = 0; let score = 0; let answered = false; function renderQuestion() { const q = questions[currentQuestion]; answered = false; document.getElementById("question-number").textContent = "Question " + (currentQuestion + 1) + " of " + questions.length; document.getElementById("question").textContent = q.question; document.getElementById("quiz-feedback").textContent = ""; document.getElementById("quiz-score").textContent = ""; document.getElementById("next-question").disabled = true; const options = document.getElementById("options"); options.innerHTML = ""; q.options.forEach((option, index) => { const button = document.createElement("button"); button.className = "quiz-option"; button.textContent = option; button.onclick = () => selectAnswer(index); options.appendChild(button); }); document.getElementById("next-question").textContent = currentQuestion === questions.length - 1 ? "See My Results" : "Next Question →"; } function selectAnswer(index) { if (answered) return; answered = true; const q = questions[currentQuestion]; const buttons = document.querySelectorAll(".quiz-option"); buttons.forEach(button => button.disabled = true); if (index === q.answer) { score++; document.getElementById("quiz-feedback").textContent = "Correct! " + q.explanation; } else { document.getElementById("quiz-feedback").textContent = "Not quite. " + q.explanation; } document.getElementById("next-question").disabled = false; } function nextQuestion() { if (!answered) return; if (currentQuestion 
+
